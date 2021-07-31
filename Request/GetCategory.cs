@@ -34,7 +34,7 @@ namespace Request
             {
                 return false;
             }
-            List<Listing> listings = Database.categoryList.GetCategoryListings(category);
+            List<Listing> listings = category.Listings;
             if (listings == null)
             {
                 return false;

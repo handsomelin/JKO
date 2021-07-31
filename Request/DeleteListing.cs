@@ -45,8 +45,17 @@ namespace Request
             {
                 return false;
             }
-            Category category = listing.ListingCategory;
-            return Database.categoryList.RemoveListings(category, listing);
+            Category category = Database.categoryList.GetCategory(listing.ListingCategory.Name);
+            if (category == null)
+            {
+                return false;
+            }
+            if (category.RemoveListing(listing))
+            {
+                Database.categoryList.Refresh();
+                return true;
+            }
+            return false;
         }
 
     }

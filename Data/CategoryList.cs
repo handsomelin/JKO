@@ -5,39 +5,39 @@ namespace Data
 {
     public class CategoryList
     {
-        Dictionary<Category, List<Listing>> listings;
+        HashSet<Category> categories;
         List<Category> topCategory;
         public CategoryList()
         {
-            this.listings = new Dictionary<Category, List<Listing>>();
+            this.categories = new HashSet<Category>();
             this.topCategory = new List<Category>();
         }
 
         public Category GetCategory(string str)
         {
-            foreach(Category category in listings.Keys)
+            Category category = new Category(str);
+            if (categories.TryGetValue(category, out category))
             {
-                if(category.Name == str)
-                {
-                    return category;
-                }
+                return category;
             }
+            Console.WriteLine("Error - category not found");
             return null;
         }
-        public List<Listing> GetCategoryListings(Category category)
+        public Category GetCategory(string str, bool createListing)
         {
-            if (!listings.ContainsKey(category))
+            Category category = new Category(str);
+            if (categories.TryGetValue(category, out category))
             {
-                Console.WriteLine("Error - category not found");
+                return category;
+            }
+            if (createListing)
+            {
                 return null;
             }
-            if(listings[category].Count == 0)
-            {
-                Console.WriteLine("Error - category has no listings");
-                return null;
-            }
-            return listings[category];
+            Console.WriteLine("Error - category not found");
+            return null;
         }
+
         public List<Category> GetTopCategory()
         {
             if (topCategory == null || topCategory.Count == 0)
@@ -51,47 +51,25 @@ namespace Data
             }
             return topCategory;
         }
-        public bool AddListings(Category category, Listing listing)
+
+        public Category Register(string str)
         {
-            if (!listings.ContainsKey(category))
+            Category category = new Category(str);
+            if (categories.Add(category))
             {
-                List<Listing> new_listing = new List<Listing>();
-                new_listing.Add(listing);
-                listings.Add(category, new_listing);
-                Refresh();
-                return true;
+                return category;
             }
-            if (listings[category].Contains(listing))//////////////affect efficiency?
-            {
-                Console.WriteLine("Already Exist");
-                return false;
-            }
-            listings[category].Add(listing);
-            Refresh();
-            return true;
+            Console.WriteLine("Cannot register category");
+            return category;
         }
-        public bool RemoveListings(Category category, Listing listing)
-        {
-            if (!listings.ContainsKey(category))
-            {
-                Console.WriteLine("No Category");
-                return false;
-            }
-            if (!listings[category].Remove(listing))//////////////affect efficiency?
-            {
-                Console.WriteLine("Listing Not Exist");
-                return false;
-            }
-            Refresh();
-            return true;
-        }
+
         public void Refresh()
         {
             int max = 1;
             topCategory.Clear();
-            foreach(Category category in listings.Keys)
+            foreach(Category category in categories)
             {
-                int n = listings[category].Count;
+                int n = category.Listings.Count;
                 if(n > max)
                 {
                     max = n;
@@ -108,13 +86,9 @@ namespace Data
 
         public void Print()
         {
-            foreach(Category category in listings.Keys)
+            foreach(Category category in categories)
             {
-                Console.WriteLine(category.Name + ": ");
-                foreach(Listing listing in listings[category])
-                {
-                    listing.Print();
-                }
+                category.Print();
             }
         }
     }

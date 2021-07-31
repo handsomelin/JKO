@@ -47,18 +47,24 @@ namespace Request
             {
                 return false;
             }
-            Category category = Database.categoryList.GetCategory(c);
+            bool createListing = true;
+            Category category = Database.categoryList.GetCategory(c, createListing);
             if(category == null)
             {
-                category = new Category(c);
+                category = Database.categoryList.Register(c);
             }
             Listing listing = Database.listingList.CreateListing(user, title, description, price, category);
             if (listing == null)
             {
                 return false;
             }
-            
-            return Database.categoryList.AddListings(category, listing);
+
+            if (category.AddListing(listing))
+            {
+                Database.categoryList.Refresh();
+                return true;
+            }
+            return false;
         }
     }
 }
