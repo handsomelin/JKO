@@ -52,7 +52,7 @@ namespace Request
             }
             if (category.RemoveListing(listing))
             {
-                Database.categoryList.Refresh();
+                Database.categoryList.Refresh(category);
                 return true;
             }
             return false;

@@ -63,8 +63,15 @@ namespace Data
             return category;
         }
 
-        public void Refresh()
+        public void Refresh(Category updatedCategory)
         {
+            if(topCategory.Count != 0 && updatedCategory.Listings.Count < topCategory[0].Listings.Count)
+            {
+                if (!topCategory.Contains(updatedCategory))
+                {
+                    return;
+                }
+            }
             int max = 1;
             topCategory.Clear();
             foreach(Category category in categories)

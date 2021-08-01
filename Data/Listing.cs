@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Data
 {
-    public class Listing
+    public class Listing : IComparable<Listing>
     {
         private int id;
         private int seed = Constant.seed;
@@ -97,6 +97,11 @@ namespace Data
         public override string ToString()
         {
             return ($"{title}|{description}|{price}|{created_at}|{listingCategory.Name}|{listingUser.Name}");
+        }
+
+        public int CompareTo(Listing other)
+        {
+            return this.price.CompareTo(other.price);
         }
     }
 }

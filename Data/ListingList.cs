@@ -55,5 +55,14 @@ namespace Data
             listings[index].Print();
             return listings[index];
         }
+        public List<Listing> GetGroup(List<int> listingIDs)
+        {
+            List<Listing> listings = new List<Listing>();
+            foreach(int id in listingIDs)
+            {
+                listings.Add(GetListing(id));
+            }
+            return listings;
+        }
     }
 }

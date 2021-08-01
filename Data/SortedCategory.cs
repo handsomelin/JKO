@@ -12,7 +12,7 @@ namespace Data
         {
             asc = true;
         }
-        public SortedCategory(string sort_type, string sort_order, List<Listing> listings)
+        public SortedCategory(string sort_type, string sort_order, List<Listing> listings)/////預設sort：價格低到高
         {
             asc = true;
             if (sort_type == "sort_time")///////若照時間排序預設為dsc
@@ -29,6 +29,8 @@ namespace Data
             }
             if (sort_type == "sort_price")
             {
+                //listings.Sort();
+                //this.sortedListings = listings;
                 if (asc)
                 {
                     this.sortedListings =
