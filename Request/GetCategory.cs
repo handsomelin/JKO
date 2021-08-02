@@ -15,7 +15,6 @@ namespace Request
             string category = parameters.GetParameter(2);
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category))
             {
-                Console.WriteLine("Wrong format");
                 return false;
             }
             return true;

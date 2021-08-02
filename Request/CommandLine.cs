@@ -16,10 +16,14 @@ namespace Request
             //var serviceCollection = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             //serviceCollection.AddSingleton<Request>();
             string input = "";
-            while (input != "Quit")
+            while (input != null && input != "Quit")
             {
                 Console.Write("# ");
                 input = Console.ReadLine();
+                if(input == null || input == "Quit")
+                {
+                    break;
+                }
                 Parameters parameters = new Parameters(input);
                 if (string.IsNullOrEmpty(input))
                 {

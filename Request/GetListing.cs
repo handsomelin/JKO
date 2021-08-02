@@ -13,7 +13,6 @@ namespace Request
             string id = parameters.GetParameter(2);
             if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(id))
             {
-                Console.WriteLine("Wrong format");
                 return false;
             }
             try

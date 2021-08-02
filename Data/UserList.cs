@@ -45,6 +45,7 @@ namespace Data
             {
                 return user;
             }
+            Console.WriteLine("Error - unknown user");
             return null;
         }
     }

@@ -77,14 +77,19 @@ namespace Data
         }
         public string GetParameter(int i)
         {
-            if(i < 0 || i >= parameter.Count)
+            if(i < 0)
             {
                 Console.WriteLine("Bug: out of range");
                 return "";
             }
+            if (i >= parameter.Count)
+            {
+                Console.WriteLine("Error: Need parameter " + i);
+                return "";
+            }
             if (string.IsNullOrEmpty(parameter[i]))
             {
-                Console.WriteLine("Bug: No Parameter");
+                Console.WriteLine("Error: Need parameter " + i);
                 return "";
             }
             return parameter[i];
